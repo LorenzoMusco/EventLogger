@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{5dcdf262-8838-45aa-93d3-20559e642aff}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	_coreLogger 	: TcLogLib.TcLogCore(bufferSize := 100 * (Tc2_System.MAX_STRING_LENGTH + TcLogLib.Constants.FifoOverhead));
+	LogPath 		: T_MaxString := '/home/Administrator/Logger';
+	FileName 		: STRING := 'TcLog.txt';
+	Logger			: FB_EventLogger();
+	OldLog			: TcLog();
+	sStringAppend1			: Tc2_System.T_MaxString := 'Ciao, mi chiamo ';
+	sStringAppend2			: Tc2_System.T_MaxString := 'Hola, io sono ';
+	sStringDebug			: STRING := 'Pippo';
+	sStringInformation		: STRING := 'Pluto';
+	bBool					: BOOL := TRUE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[_coreLogger
+	.WriteToAds()
+  	//.WriteToFile(LogPath, FileName)
+  	.MinimumLevel(TcLogLib.LogLevels.Debug)
+  	.RunLogger();
+	
+
+IF bBool THEN
+	Logger.Append(sStringAppend1)
+	.Debug(sStringDebug);
+ELSE
+	Logger.Append(sStringAppend2)
+	.Debug(sStringInformation);
+END_IF
+
+	
+
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

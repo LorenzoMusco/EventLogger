@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_EventLogger" Id="{1aa67368-e303-4734-ae87-07290b7c16e8}" SpecialFunc="None">
+    <Declaration><![CDATA[{attribute 'reflection'} 
+FUNCTION_BLOCK FB_EventLogger EXTENDS TcLog
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	_WorkString	: Tc2_System.T_MaxString;
+	StringManager		: FB_StringManager;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Append" Id="{d1e5fd85-235d-459a-b497-045db3674c42}">
+      <Declaration><![CDATA[METHOD Append : REFERENCE TO FB_EventLogger
+VAR_INPUT
+	sString		: T_MaxString;
+END_VAR
+
+VAR_INST
+	OldString 	: T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF sString <> OldString THEN
+	StringManager.Reset();
+	StringManager.Append(sString);
+	OldString := sString;
+END_IF
+
+Append REF= THIS^;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Debug" Id="{5999ae39-e738-46af-b0a3-2337db0b32f0}">
+      <Declaration><![CDATA[/// Logs the log string in DEBUG level.
+METHOD Debug : BOOL
+VAR_INPUT
+  	/// Message to be appended to log string.
+  	message : T_MaxString; 
+END_VAR
+
+VAR_INST
+	sStringToBeLogged : T_MaxString;
+	OldsCompletedString : T_MaxString;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF message <> OldsCompletedString THEN
+	sStringToBeLogged := '';
+	sStringToBeLogged := CONCAT(StringManager.ToString(), message);
+	SUPER^.Debug(sStringToBeLogged);
+	OldsCompletedString := message;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Error" Id="{37e1358a-40dd-4b42-87ad-97f7d6613f51}">
+      <Declaration><![CDATA[/// Logs the log string in ERROR level.
+METHOD Error : BOOL
+VAR_INPUT
+  /// Message to be appended to log string.
+  message : Tc2_System.T_MaxString; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Fatal" Id="{129abf48-7d5e-4c65-98c8-de9c267bdd5c}">
+      <Declaration><![CDATA[/// Logs the log string in FATAL level.
+METHOD Fatal : BOOL
+VAR_INPUT
+  /// Message to be appended to log string.
+  message : Tc2_System.T_MaxString; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Information" Id="{6991a8ac-5536-40b5-a57a-056ccac01b8d}">
+      <Declaration><![CDATA[/// Logs the log string in INFORMATION level.
+METHOD Information : BOOL
+VAR_INPUT
+  	/// Message to be appended to log string.
+  	message : T_MaxString; 
+END_VAR
+
+VAR_INST
+	sStringToBeLogged : T_MaxString;
+	OldsCompletedString : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF message <> OldsCompletedString THEN
+	sStringToBeLogged := '';
+	sStringToBeLogged := CONCAT(StringManager.ToString(), message);
+	SUPER^.Information(sStringToBeLogged);
+	OldsCompletedString := message;
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Warning" Id="{b6254e94-446f-4182-8668-824bf93459ce}">
+      <Declaration><![CDATA[/// Logs the log string in WARNING level.
+METHOD Warning : BOOL
+VAR_INPUT
+  /// Message to be appended to log string.
+  message : Tc2_System.T_MaxString; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>
