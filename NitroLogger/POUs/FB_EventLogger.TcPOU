@@ -29,6 +29,7 @@ END_VAR
         <ST><![CDATA[IF sString <> OldString THEN
 	StringManager.Reset();
 	StringManager.Append(sString);
+	_WorkString := CONCAT(_WorkString, sString);
 	OldString := sString;
 END_IF
 
@@ -50,11 +51,18 @@ VAR_INST
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[IF message <> OldsCompletedString THEN
-	sStringToBeLogged := '';
-	sStringToBeLogged := CONCAT(StringManager.ToString(), message);
-	SUPER^.Debug(sStringToBeLogged);
+	//sStringToBeLogged := '';
+	_WorkString := CONCAT(_WorkString, message);
+	SUPER^.Debug(_WorkString);
 	OldsCompletedString := message;
 END_IF
+
+//IF message <> OldsCompletedString THEN
+//	sStringToBeLogged := '';
+//	sStringToBeLogged := CONCAT(StringManager.ToString(), message);
+//	SUPER^.Debug(sStringToBeLogged);
+//	OldsCompletedString := message;
+//END_IF
 ]]></ST>
       </Implementation>
     </Method>
@@ -62,24 +70,46 @@ END_IF
       <Declaration><![CDATA[/// Logs the log string in ERROR level.
 METHOD Error : BOOL
 VAR_INPUT
-  /// Message to be appended to log string.
-  message : Tc2_System.T_MaxString; 
+  	/// Message to be appended to log string.
+  	message : T_MaxString; 
+END_VAR
+
+VAR_INST
+	sStringToBeLogged : T_MaxString;
+	OldsCompletedString : T_MaxString;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[IF message <> OldsCompletedString THEN
+	sStringToBeLogged := '';
+	sStringToBeLogged := CONCAT(StringManager.ToString(), message);
+	SUPER^.Error(sStringToBeLogged);
+	OldsCompletedString := message;
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Fatal" Id="{129abf48-7d5e-4c65-98c8-de9c267bdd5c}">
       <Declaration><![CDATA[/// Logs the log string in FATAL level.
 METHOD Fatal : BOOL
 VAR_INPUT
-  /// Message to be appended to log string.
-  message : Tc2_System.T_MaxString; 
+  	/// Message to be appended to log string.
+  	message : T_MaxString; 
+END_VAR
+
+VAR_INST
+	sStringToBeLogged : T_MaxString;
+	OldsCompletedString : T_MaxString;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[IF message <> OldsCompletedString THEN
+	sStringToBeLogged := '';
+	sStringToBeLogged := CONCAT(StringManager.ToString(), message);
+	SUPER^.Fatal(sStringToBeLogged);
+	OldsCompletedString := message;
+END_IF
+]]></ST>
       </Implementation>
     </Method>
     <Method Name="Information" Id="{6991a8ac-5536-40b5-a57a-056ccac01b8d}">
@@ -109,12 +139,23 @@ END_IF
       <Declaration><![CDATA[/// Logs the log string in WARNING level.
 METHOD Warning : BOOL
 VAR_INPUT
-  /// Message to be appended to log string.
-  message : Tc2_System.T_MaxString; 
+  	/// Message to be appended to log string.
+  	message : T_MaxString; 
+END_VAR
+
+VAR_INST
+	sStringToBeLogged : T_MaxString;
+	OldsCompletedString : T_MaxString;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[]]></ST>
+        <ST><![CDATA[IF message <> OldsCompletedString THEN
+	sStringToBeLogged := '';
+	sStringToBeLogged := CONCAT(StringManager.ToString(), message);
+	SUPER^.Warning(sStringToBeLogged);
+	OldsCompletedString := message;
+END_IF
+]]></ST>
       </Implementation>
     </Method>
   </POU>

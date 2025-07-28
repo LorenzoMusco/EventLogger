@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_Object" Id="{069a147d-2605-4c5a-b1b5-85f9f72aa0b5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Object EXTENDS TcLog
+VAR
+	Logger					: FB_EventLogger();
+	bBool					: BOOL := TRUE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF bBool THEN
+	Logger.Append('Io sono ')
+	.Debug('Batman');
+ELSE
+	Logger.Append('Io sono ')
+	.Debug('Superman');
+END_IF]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
