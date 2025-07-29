@@ -13,9 +13,15 @@ VAR
 	Object					: FB_Object();
 	sStringAppend1			: Tc2_System.T_MaxString := 'Ciao, mi chiamo ';
 	sStringAppend2			: Tc2_System.T_MaxString := 'Hola, io sono ';
-	sStringDebug			: STRING := 'Pippo';
+	sStringAppend3			: Tc2_System.T_MaxString := 'Giovanni ';
+	sStringDebug			: STRING;
 	sStringInformation		: STRING := 'Pluto';
 	bBool					: BOOL := TRUE;
+	string_to_log 			: STRING;
+	old_stringtolog			: STRING;
+	
+	Debug_message : STRING;
+	Append_Debug_message : STRING;
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -24,15 +30,13 @@ END_VAR
   	//.WriteToFile(LogPath, FileName)
   	.MinimumLevel(TcLogLib.LogLevels.Debug)
   	.RunLogger();
+	
 Object();	
 
-IF bBool THEN
-	Logger.Append(sStringAppend1)
-	.Debug(sStringDebug);
-ELSE
-	Logger.Append(sStringAppend2)
-	.Debug(sStringInformation);
-END_IF
+
+Logger(Append_message := Append_Debug_message,Debug_message := Debug_message);
+Logger.Append('').Debug('');
+
 
 	
 

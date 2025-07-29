@@ -4,6 +4,8 @@
     <Declaration><![CDATA[{attribute 'reflection'} 
 FUNCTION_BLOCK FB_EventLogger EXTENDS TcLog
 VAR_INPUT
+	Debug_message : STRING;
+	Append_message :STRING;
 END_VAR
 VAR_OUTPUT
 END_VAR
@@ -23,14 +25,18 @@ END_VAR
 
 VAR_INST
 	OldString 	: T_MaxString;
+	oldmessage  : T_MaxString;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF sString <> OldString THEN
-	StringManager.Reset();
-	StringManager.Append(sString);
-	_WorkString := CONCAT(_WorkString, sString);
-	OldString := sString;
+        <ST><![CDATA[
+IF Append_message <> OldString OR CONCAT(Append_message,Debug_message) <> CONCAT(OldString,oldmessage) THEN
+	//StringManager.Reset();
+	StringManager.Append(Append_message);
+	SUPER^.Debug(_WorkString);
+	_WorkString := CONCAT(_WorkString, Append_message);
+	OldString := Append_message;
+	oldmessage := Debug_message;
 END_IF
 
 Append REF= THIS^;
@@ -42,19 +48,22 @@ Append REF= THIS^;
 METHOD Debug : BOOL
 VAR_INPUT
   	/// Message to be appended to log string.
-  	message : T_MaxString; 
+	message : T_MaxString;
 END_VAR
 
 VAR_INST
 	sStringToBeLogged : T_MaxString;
 	OldsCompletedString : T_MaxString;
+	OldAppendMessage : T_MaxString;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF message <> OldsCompletedString THEN
+        <ST><![CDATA[IF Debug_message <> OldsCompletedString OR Append_message <> OldAppendMessage THEN
 	//sStringToBeLogged := '';
-	_WorkString := CONCAT(_WorkString, message);
+	_WorkString := CONCAT(_WorkString, Debug_message);
 	SUPER^.Debug(_WorkString);
-	OldsCompletedString := message;
+	_WorkString := '';
+	OldsCompletedString := Debug_message;
+	OldAppendMessage := Append_message;
 END_IF
 
 //IF message <> OldsCompletedString THEN

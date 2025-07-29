@@ -9,11 +9,12 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF bBool THEN
+	Logger(Debug_message := 'Batman');
 	Logger.Append('Io sono ')
-	.Debug('Batman');
+	.Debug('');
 ELSE
 	Logger.Append('Io sono ')
-	.Debug('Superman');
+	.Debug('');
 END_IF]]></ST>
     </Implementation>
   </POU>
