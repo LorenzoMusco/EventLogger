@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="FB_EventLogger_Append" Id="{faf06ee3-cb67-4166-bca3-58652702813c}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_EventLogger_Append EXTENDS TcLog
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	Append_message : T_MaxString;
+	Event_logger	:FB_EventLogger();
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="Append" Id="{d1e5fd85-235d-459a-b497-045db3674c42}">
+      <Declaration><![CDATA[METHOD Append : REFERENCE TO FB_EventLogger_Append
+VAR_INPUT
+	sString		: T_MaxString;
+END_VAR
+
+VAR_INST
+	OldString 	: T_MaxString;
+	oldmessage  : T_MaxString;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Append_message := sString;
+IF Append_message <> OldString OR CONCAT(Append_message,EventLogger.GetDebugMessage) <> CONCAT(OldString,oldmessage) THEN
+	//StringManager.Reset();
+	StringManager.Append(Append_message);
+	SUPER^.Debug(_WorkString);
+	_WorkString := CONCAT(_WorkString, Append_message);
+	OldString := Append_message;
+	oldmessage := Debug_message;
+END_IF
+
+Append REF= THIS^;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="GetAppendMessage" Id="{56631d5e-5eb6-4fce-9b0e-a6f3e76a9789}">
+      <Declaration><![CDATA[PROPERTY GetAppendMessage : STRING]]></Declaration>
+      <Get Name="Get" Id="{32d4771b-2ecf-4a33-9077-725256fcfd42}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[GetAppendMessage := Append_message;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+  </POU>
+</TcPlcObject>

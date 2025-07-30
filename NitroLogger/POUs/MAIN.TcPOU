@@ -9,19 +9,13 @@ VAR
 	FileName 				: STRING := 'TcLog.txt';
 	//Implementation
 	Logger					: FB_EventLogger();
-	//Local debug
-	Object					: FB_Object();
-	sStringAppend1			: Tc2_System.T_MaxString := 'Ciao, mi chiamo ';
-	sStringAppend2			: Tc2_System.T_MaxString := 'Hola, io sono ';
-	sStringAppend3			: Tc2_System.T_MaxString := 'Giovanni ';
-	sStringDebug			: STRING;
-	sStringInformation		: STRING := 'Pluto';
-	bBool					: BOOL := TRUE;
-	string_to_log 			: STRING;
-	old_stringtolog			: STRING;
 	
-	Debug_message : STRING;
-	Append_Debug_message : STRING;
+	Debug_message 			: STRING;
+	Error_message 			: STRING;
+	Fatal_message 			: STRING;
+	Information_message 	: STRING;
+	Warning_message			: STRING;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -30,12 +24,15 @@ END_VAR
   	//.WriteToFile(LogPath, FileName)
   	.MinimumLevel(TcLogLib.LogLevels.Debug)
   	.RunLogger();
-	
-Object();	
 
 
-Logger(Append_message := Append_Debug_message,Debug_message := Debug_message);
-Logger.Append('').Debug('');
+Logger.Debug(Debug_message);
+Logger.Error(Error_message);
+Logger.Fatal(Fatal_message);
+Logger.Information(Information_message);
+Logger.Warning(Warning_message);
+
+
 
 
 	
