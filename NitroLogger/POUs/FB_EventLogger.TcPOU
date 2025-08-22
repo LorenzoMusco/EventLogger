@@ -3,13 +3,15 @@
   <POU Name="FB_EventLogger" Id="{1aa67368-e303-4734-ae87-07290b7c16e8}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'reflection'} 
 FUNCTION_BLOCK FB_EventLogger EXTENDS TcLog
-VAR_INPUT
-END_VAR
-VAR_OUTPUT
-END_VAR
+
 VAR
-	_WorkString	: Tc2_System.T_MaxString;
+	_WorkString			: Tc2_System.T_MaxString;
 	StringManager		: FB_StringManager;
+	isSpammable			: BOOL;
+	
+	sStringToBeLogged : T_MaxString;
+	OldsCompletedString, NewCompletedString : T_MaxString;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -26,136 +28,141 @@ VAR_INST
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF sString <> OldString THEN
-	StringManager.Reset();
-	StringManager.Append(sString);
-	_WorkString := CONCAT(_WorkString, sString);
-	OldString := sString;
-END_IF
+        <ST><![CDATA[//StringManager.Append(sString);
+_WorkString := CONCAT(_WorkString, sString);
 
 Append REF= THIS^;
 ]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="CanSpam" Id="{a8d029d9-2b0c-4158-b488-9f9e8e28e4e7}">
+      <Declaration><![CDATA[METHOD CanSpam : REFERENCE TO FB_EventLogger
+VAR
+	
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[isSpammable := TRUE;
+CanSpam REF= THIS^;]]></ST>
       </Implementation>
     </Method>
     <Method Name="Debug" Id="{5999ae39-e738-46af-b0a3-2337db0b32f0}">
       <Declaration><![CDATA[/// Logs the log string in DEBUG level.
 METHOD Debug : BOOL
 VAR_INPUT
-  	/// Message to be appended to log string.
   	message : T_MaxString; 
 END_VAR
 
 VAR_INST
-	sStringToBeLogged : T_MaxString;
-	OldsCompletedString : T_MaxString;
+	//sStringToBeLogged : T_MaxString;
+	//OldsCompletedString, NewCompletedString : T_MaxString;
 END_VAR]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF message <> OldsCompletedString THEN
-	//sStringToBeLogged := '';
-	_WorkString := CONCAT(_WorkString, message);
-	SUPER^.Debug(_WorkString);
-	OldsCompletedString := message;
-END_IF
+        <ST><![CDATA[_WorkString := CONCAT(_WorkString, message);
+NewCompletedString := _WorkString;
+_WorkString := '';
 
-//IF message <> OldsCompletedString THEN
-//	sStringToBeLogged := '';
-//	sStringToBeLogged := CONCAT(StringManager.ToString(), message);
-//	SUPER^.Debug(sStringToBeLogged);
-//	OldsCompletedString := message;
-//END_IF
-]]></ST>
+IF NewCompletedString <> OldsCompletedString OR isSpammable THEN
+	SUPER^.Debug(NewCompletedString);
+	OldsCompletedString := NewCompletedString;
+	isSpammable := FALSE;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Error" Id="{37e1358a-40dd-4b42-87ad-97f7d6613f51}">
       <Declaration><![CDATA[/// Logs the log string in ERROR level.
 METHOD Error : BOOL
 VAR_INPUT
-  	/// Message to be appended to log string.
   	message : T_MaxString; 
 END_VAR
 
 VAR_INST
-	sStringToBeLogged : T_MaxString;
-	OldsCompletedString : T_MaxString;
+	//sStringToBeLogged : T_MaxString;
+	//OldsCompletedString, NewCompletedString : T_MaxString;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF message <> OldsCompletedString THEN
-	sStringToBeLogged := '';
-	sStringToBeLogged := CONCAT(StringManager.ToString(), message);
-	SUPER^.Error(sStringToBeLogged);
-	OldsCompletedString := message;
-END_IF
-]]></ST>
+        <ST><![CDATA[_WorkString := CONCAT(_WorkString, message);
+NewCompletedString := _WorkString;
+_WorkString := '';
+
+IF NewCompletedString <> OldsCompletedString THEN
+	SUPER^.Error(NewCompletedString);
+	OldsCompletedString := NewCompletedString;
+	isSpammable := FALSE;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Fatal" Id="{129abf48-7d5e-4c65-98c8-de9c267bdd5c}">
       <Declaration><![CDATA[/// Logs the log string in FATAL level.
 METHOD Fatal : BOOL
 VAR_INPUT
-  	/// Message to be appended to log string.
   	message : T_MaxString; 
 END_VAR
 
 VAR_INST
-	sStringToBeLogged : T_MaxString;
-	OldsCompletedString : T_MaxString;
+	//sStringToBeLogged : T_MaxString;
+	//OldsCompletedString, NewCompletedString : T_MaxString;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF message <> OldsCompletedString THEN
-	sStringToBeLogged := '';
-	sStringToBeLogged := CONCAT(StringManager.ToString(), message);
-	SUPER^.Fatal(sStringToBeLogged);
-	OldsCompletedString := message;
-END_IF
-]]></ST>
+        <ST><![CDATA[_WorkString := CONCAT(_WorkString, message);
+NewCompletedString := _WorkString;
+_WorkString := '';
+
+IF NewCompletedString <> OldsCompletedString THEN
+	SUPER^.Error(NewCompletedString);
+	OldsCompletedString := NewCompletedString;
+	isSpammable := FALSE;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Information" Id="{6991a8ac-5536-40b5-a57a-056ccac01b8d}">
       <Declaration><![CDATA[/// Logs the log string in INFORMATION level.
 METHOD Information : BOOL
 VAR_INPUT
-  	/// Message to be appended to log string.
   	message : T_MaxString; 
 END_VAR
 
 VAR_INST
-	sStringToBeLogged : T_MaxString;
-	OldsCompletedString : T_MaxString;
+	//sStringToBeLogged : T_MaxString;
+	//OldsCompletedString, NewCompletedString : T_MaxString;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF message <> OldsCompletedString THEN
-	sStringToBeLogged := '';
-	sStringToBeLogged := CONCAT(StringManager.ToString(), message);
-	SUPER^.Information(sStringToBeLogged);
-	OldsCompletedString := message;
-END_IF
-]]></ST>
+        <ST><![CDATA[_WorkString := CONCAT(_WorkString, message);
+NewCompletedString := _WorkString;
+_WorkString := '';
+
+IF NewCompletedString <> OldsCompletedString THEN
+	SUPER^.Information(NewCompletedString);
+	OldsCompletedString := NewCompletedString;
+	isSpammable := FALSE;
+END_IF]]></ST>
       </Implementation>
     </Method>
     <Method Name="Warning" Id="{b6254e94-446f-4182-8668-824bf93459ce}">
       <Declaration><![CDATA[/// Logs the log string in WARNING level.
 METHOD Warning : BOOL
 VAR_INPUT
-  	/// Message to be appended to log string.
   	message : T_MaxString; 
 END_VAR
 
 VAR_INST
-	sStringToBeLogged : T_MaxString;
-	OldsCompletedString : T_MaxString;
+	//sStringToBeLogged : T_MaxString;
+	//OldsCompletedString, NewCompletedString : T_MaxString;
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[IF message <> OldsCompletedString THEN
-	sStringToBeLogged := '';
-	sStringToBeLogged := CONCAT(StringManager.ToString(), message);
-	SUPER^.Warning(sStringToBeLogged);
-	OldsCompletedString := message;
-END_IF
-]]></ST>
+        <ST><![CDATA[_WorkString := CONCAT(_WorkString, message);
+NewCompletedString := _WorkString;
+_WorkString := '';
+
+IF NewCompletedString <> OldsCompletedString THEN
+	SUPER^.Warning(NewCompletedString);
+	OldsCompletedString := NewCompletedString;
+	isSpammable := FALSE;
+END_IF]]></ST>
       </Implementation>
     </Method>
   </POU>

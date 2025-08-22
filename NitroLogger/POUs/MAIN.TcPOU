@@ -11,8 +11,8 @@ VAR
 	Logger					: FB_EventLogger();
 	//Local debug
 	Object					: FB_Object();
-	sStringAppend1			: Tc2_System.T_MaxString := 'Ciao, mi chiamo ';
-	sStringAppend2			: Tc2_System.T_MaxString := 'Hola, io sono ';
+	sStringAppend1			: Tc2_System.T_MaxString := 'Ciao, ';
+	sStringAppend2			: Tc2_System.T_MaxString := 'Hola, ';
 	sStringDebug			: STRING := 'Pippo';
 	sStringInformation		: STRING := 'Pluto';
 	bBool					: BOOL := TRUE;
@@ -24,14 +24,19 @@ END_VAR
   	//.WriteToFile(LogPath, FileName)
   	.MinimumLevel(TcLogLib.LogLevels.Debug)
   	.RunLogger();
-Object();	
+	
+Object(bBool := bBool);	
 
 IF bBool THEN
 	Logger.Append(sStringAppend1)
-	.Debug(sStringDebug);
+		.Append('Mi ')
+		.Append('Chiamo ')
+		.Debug(sStringDebug);
 ELSE
 	Logger.Append(sStringAppend2)
-	.Debug(sStringInformation);
+		.Append('Io ')
+		.Append('sono ')
+		.Debug(sStringInformation);
 END_IF
 
 	
