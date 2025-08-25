@@ -12,12 +12,12 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF bBool THEN
-	Logger.CanSpam()
-	.Append('Io ')
+	Logger.Append('Io ')
 	.Append('sono ')
 	.Debug('Batman');
 ELSE
-	Logger.Append('Io ')
+	Logger.CanSpam()
+	.Append('Io ')
 	.Append('sono ')
 	.Debug('Superman');
 END_IF]]></ST>

@@ -20,6 +20,7 @@ END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[_coreLogger
+	.IncludeInstancePath()
 	.WriteToAds()
   	//.WriteToFile(LogPath, FileName)
   	.MinimumLevel(TcLogLib.LogLevels.Debug)
