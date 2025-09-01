@@ -9,8 +9,7 @@ VAR
 	FileName 				: STRING := 'TcLog.txt';
 	//Implementation
 	Logger					: FB_EventLogger();
-	//Local debug
-	Object					: FB_Object();
+	//Debug
 	sStringAppend1			: Tc2_System.T_MaxString := 'Ciao, ';
 	sStringAppend2			: Tc2_System.T_MaxString := 'Hola, ';
 	sStringDebug			: STRING := 'Pippo';
@@ -25,8 +24,6 @@ END_VAR
   	//.WriteToFile(LogPath, FileName)
   	.MinimumLevel(TcLogLib.LogLevels.Debug)
   	.RunLogger();
-	
-Object(bBool := bBool);	
 
 IF bBool THEN
 	Logger.Append(sStringAppend1)

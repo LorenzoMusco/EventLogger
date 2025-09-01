@@ -3,15 +3,12 @@
   <POU Name="FB_EventLogger" Id="{1aa67368-e303-4734-ae87-07290b7c16e8}" SpecialFunc="None">
     <Declaration><![CDATA[{attribute 'reflection'} 
 FUNCTION_BLOCK FB_EventLogger EXTENDS TcLog
-
 VAR
 	_WorkString			: Tc2_System.T_MaxString;
-	StringManager		: FB_StringManager;
 	isSpammable			: BOOL;
 	
 	sStringToBeLogged : T_MaxString;
 	OldsCompletedString, NewCompletedString : T_MaxString;
-	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -28,8 +25,7 @@ VAR_INST
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[//StringManager.Append(sString);
-_WorkString := CONCAT(_WorkString, sString);
+        <ST><![CDATA[_WorkString := CONCAT(_WorkString, sString);
 
 Append REF= THIS^;
 ]]></ST>
@@ -42,7 +38,7 @@ VAR
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[isSpammable := TRUE;
+        <ST><![CDATA[isSpammable := TRUE; 
 CanSpam REF= THIS^;]]></ST>
       </Implementation>
     </Method>
@@ -51,11 +47,6 @@ CanSpam REF= THIS^;]]></ST>
 METHOD Debug : BOOL
 VAR_INPUT
   	message : T_MaxString; 
-END_VAR
-
-VAR_INST
-	//sStringToBeLogged : T_MaxString;
-	//OldsCompletedString, NewCompletedString : T_MaxString;
 END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_WorkString := CONCAT(_WorkString, message);
@@ -75,11 +66,6 @@ METHOD Error : BOOL
 VAR_INPUT
   	message : T_MaxString; 
 END_VAR
-
-VAR_INST
-	//sStringToBeLogged : T_MaxString;
-	//OldsCompletedString, NewCompletedString : T_MaxString;
-END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[_WorkString := CONCAT(_WorkString, message);
@@ -98,13 +84,7 @@ END_IF]]></ST>
 METHOD Fatal : BOOL
 VAR_INPUT
   	message : T_MaxString; 
-END_VAR
-
-VAR_INST
-	//sStringToBeLogged : T_MaxString;
-	//OldsCompletedString, NewCompletedString : T_MaxString;
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_WorkString := CONCAT(_WorkString, message);
 NewCompletedString := _WorkString;
@@ -122,13 +102,7 @@ END_IF]]></ST>
 METHOD Information : BOOL
 VAR_INPUT
   	message : T_MaxString; 
-END_VAR
-
-VAR_INST
-	//sStringToBeLogged : T_MaxString;
-	//OldsCompletedString, NewCompletedString : T_MaxString;
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_WorkString := CONCAT(_WorkString, message);
 NewCompletedString := _WorkString;
@@ -146,13 +120,7 @@ END_IF]]></ST>
 METHOD Warning : BOOL
 VAR_INPUT
   	message : T_MaxString; 
-END_VAR
-
-VAR_INST
-	//sStringToBeLogged : T_MaxString;
-	//OldsCompletedString, NewCompletedString : T_MaxString;
-END_VAR
-]]></Declaration>
+END_VAR]]></Declaration>
       <Implementation>
         <ST><![CDATA[_WorkString := CONCAT(_WorkString, message);
 NewCompletedString := _WorkString;
