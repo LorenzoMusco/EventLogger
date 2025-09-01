@@ -16,19 +16,37 @@
     <Implicit_KindOfTask>{19460104-73e2-4755-93e7-e162ce7968b8}</Implicit_KindOfTask>
     <Implicit_Jitter_Distribution>{7a3e8428-ead6-4585-9525-e4b943bb689d}</Implicit_Jitter_Distribution>
     <LibraryReferences>{e0a9b954-da89-4390-b43b-7ea276f3cd85}</LibraryReferences>
+    <Company>ReiLab s.p.a.</Company>
+    <Released>true</Released>
+    <Title>Tc_EventLogger</Title>
+    <ProjectVersion>1.1.2.0</ProjectVersion>
+    <DefaultNamespace>TC_EventLog</DefaultNamespace>
+    <Author>Lorenzo Musco</Author>
+    <Description>This library wrap a Function block around the pre-existing TcLog in order to avoid cyclic call to the logger. </Description>
+    <DocFormat>reStructuredText</DocFormat>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Constants.TcGVL">
+      <SubType>Code</SubType>
+      <LinkAlways>true</LinkAlways>
+    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\FB_EventLogger.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="POUs\FB_EventLoggerCore.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Version\Global_Version.TcGVL">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
-    <Folder Include="POUs\00 - Utilities" />
+    <Folder Include="Version" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
@@ -47,6 +65,7 @@
     </PlaceholderReference>
     <PlaceholderReference Include="TcLog">
       <DefaultResolution>TcLog, * (Benedikt Geisler)</DefaultResolution>
+      <Namespace>TcLogLib</Namespace>
     </PlaceholderReference>
   </ItemGroup>
   <ItemGroup>
