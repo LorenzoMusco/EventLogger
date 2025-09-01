@@ -7,7 +7,6 @@ VAR
 	_WorkString			: Tc2_System.T_MaxString;
 	isSpammable			: BOOL;
 	
-	sStringToBeLogged : T_MaxString;
 	OldsCompletedString, NewCompletedString : T_MaxString;
 END_VAR
 ]]></Declaration>
