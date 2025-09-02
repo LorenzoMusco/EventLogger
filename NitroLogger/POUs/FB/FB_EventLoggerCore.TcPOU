@@ -1,8 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="FB_EventLoggerCore" Id="{0877040a-dfa8-423e-9d31-5def1eafc26d}" SpecialFunc="None">
+  <POU Name="FB_EventLoggerCore" Id="{a3461c24-8d97-428e-b3cb-0fe3d91d5f29}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_EventLoggerCore EXTENDS TcLogCore
-
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[]]></ST>

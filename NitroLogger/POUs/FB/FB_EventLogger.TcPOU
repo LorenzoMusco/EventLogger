@@ -114,6 +114,18 @@ IF NewCompletedString <> OldsCompletedString THEN
 END_IF]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Init" Id="{a5f6ac80-ef5f-487e-a215-ae973f630496}">
+      <Declaration><![CDATA[/// Initializes the reference to the core logger. Should only be called once from the core logger directly.
+METHOD PUBLIC Init : BOOL
+VAR_INPUT
+  /// Reference to TcLoggerCore instance.
+  ref2Core : ILogCore; 
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[SUPER^.Init(ref2Core);]]></ST>
+      </Implementation>
+    </Method>
     <Method Name="Warning" Id="{b6254e94-446f-4182-8668-824bf93459ce}">
       <Declaration><![CDATA[/// Logs the log string in WARNING level.
 METHOD Warning : BOOL

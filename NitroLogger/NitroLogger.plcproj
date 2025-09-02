@@ -19,24 +19,71 @@
     <Company>ReiLab s.p.a.</Company>
     <Released>true</Released>
     <Title>Tc_EventLogger</Title>
-    <ProjectVersion>1.1.2.0</ProjectVersion>
+    <ProjectVersion>1.1.2.6</ProjectVersion>
     <DefaultNamespace>TC_EventLog</DefaultNamespace>
     <Author>Lorenzo Musco</Author>
     <Description>This library wrap a Function block around the pre-existing TcLog in order to avoid cyclic call to the logger. </Description>
     <DocFormat>reStructuredText</DocFormat>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Constants.TcGVL">
-      <SubType>Code</SubType>
-      <LinkAlways>true</LinkAlways>
-    </Compile>
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_EventLogger.TcPOU">
+    <Compile Include="POUs\FB\FB_EventLogger.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\FB_EventLoggerCore.TcPOU">
+    <Compile Include="POUs\FB\FB_EventLoggerCore.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FB\FB_LogTrig.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\FB\LogLevelToAdsLogMsgType.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\StringBuilder\StringBuilder.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\StringBuilder\_Interfaces\ILimitedStringBuilder.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\StringBuilder\_Interfaces\IStringBuilder.TcIO">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Utils\AnyToString.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Utils\DateTime.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Utils\DeleteOldFiles.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Utils\DynamicStringBuffer.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Utils\GetFileAgeInSeconds.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Utils\_DataTypes\DeleteFilesState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Utils\_DataTypes\PersistToFileState.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\_DataTypes\Error.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\_DataTypes\ErrorCodes.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\_DataTypes\LoggingConfiguration.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\_DataTypes\LogLevels.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\_DataTypes\RollingIntervals.TcDUT">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Version\Global_Version.TcGVL">
@@ -44,8 +91,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DUTs" />
-    <Folder Include="GVLs" />
+    <Folder Include="POUs\FB" />
+    <Folder Include="POUs\StringBuilder" />
+    <Folder Include="POUs\StringBuilder\_Interfaces" />
+    <Folder Include="POUs\Utils" />
+    <Folder Include="POUs\Utils\_DataTypes" />
+    <Folder Include="POUs\_DataTypes" />
+    <Folder Include="POUs\_Interfaces" />
     <Folder Include="Version" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
@@ -58,6 +110,10 @@
     <PlaceholderReference Include="Tc2_System">
       <DefaultResolution>Tc2_System, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_System</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="Tc2_Utilities">
+      <DefaultResolution>Tc2_Utilities, * (Beckhoff Automation GmbH)</DefaultResolution>
+      <Namespace>Tc2_Utilities</Namespace>
     </PlaceholderReference>
     <PlaceholderReference Include="Tc3_Module">
       <DefaultResolution>Tc3_Module, * (Beckhoff Automation GmbH)</DefaultResolution>
@@ -72,6 +128,14 @@
     <None Include="NitroLogger.tmc">
       <SubType>Content</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <LibraryReference Include="Base Interfaces,newest,System">
+      <Namespace>IBaseLibrary</Namespace>
+    </LibraryReference>
+    <LibraryReference Include="Tc3_DynamicMemory,1.0.2.0,Beckhoff Automation GmbH">
+      <Namespace>Tc3_DynamicMemory</Namespace>
+    </LibraryReference>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
