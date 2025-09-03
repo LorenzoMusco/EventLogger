@@ -16,7 +16,7 @@
     <Implicit_KindOfTask>{19460104-73e2-4755-93e7-e162ce7968b8}</Implicit_KindOfTask>
     <Implicit_Jitter_Distribution>{7a3e8428-ead6-4585-9525-e4b943bb689d}</Implicit_Jitter_Distribution>
     <LibraryReferences>{e0a9b954-da89-4390-b43b-7ea276f3cd85}</LibraryReferences>
-    <Company>ReiLab s.p.a.</Company>
+    <Company>Reinova s.p.a.</Company>
     <Released>true</Released>
     <Title>Tc_EventLogger</Title>
     <ProjectVersion>1.1.2.6</ProjectVersion>
